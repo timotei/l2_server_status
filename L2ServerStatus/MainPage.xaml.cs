@@ -1,4 +1,18 @@
-﻿using System;
+﻿/*
+   Copyright (C) 2012 by Timotei Dolean <timotei21@gmail.com>
+
+   Part of the Lineage 2 Server Status Project https://github.com/timotei/l2_server_status
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY.
+
+   See the COPYING file for more details.
+*/
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Windows;
@@ -113,9 +127,10 @@ namespace L2ServerStatus
 
 			WebRequest request = WebRequest.Create( url );
 
-			WebRequestState state = new WebRequestState( );
-			state.ServerName = serverName;
-			state.WebRequest = request;
+			WebRequestState state = new WebRequestState {
+				ServerName = serverName,
+				WebRequest = request
+			};
 
 			request.BeginGetResponse( OnRequestResponse, state );
 		}
@@ -129,7 +144,7 @@ namespace L2ServerStatus
 			}
 			catch ( Exception e ) {
 				if ( !_responseErrorOcurred ) {
-					Scheduler.Dispatcher.Schedule( ( ) => MessageBox.Show( "There was an problem contacting the server. Please check your Internet Connection." ) );
+					Scheduler.Dispatcher.Schedule( ( ) => MessageBox.Show( "There was a problem contacting the server. Please check your Internet Connection." ) );
 					_responseErrorOcurred = true;
 				}
 				Scheduler.Dispatcher.Schedule( ( ) => OnRefreshFinished( state.ServerName ) );
@@ -206,7 +221,6 @@ namespace L2ServerStatus
 		private const string PingFormat = "Ping: {0} ms";
 
 		private readonly IDictionary<string, Grid>  _grids = new Dictionary<string, Grid>( );
-		private readonly IDictionary<string, ProgressBar>  _progressBars = new Dictionary<string, ProgressBar>( );
 	}
 
 	class WebRequestState
