@@ -18,7 +18,7 @@ namespace L2ServerStatus
 {
 	public class Config
 	{
-		public const string UrlFormat = "http://{0}.kaifas.lt/nosound";
+		public const string StatusUrl = "http://www.lineage2.com/en/community/server-status/";
 
 		public static List<string> ServerNames = new List<string>( )
 			{
